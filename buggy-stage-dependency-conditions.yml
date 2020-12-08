@@ -20,6 +20,7 @@ stages:
       steps:
         - script: |
             echo "One complete"
+            exit 1
 - stage: Two
   dependsOn: []
   displayName: Two
