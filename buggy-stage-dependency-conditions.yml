@@ -32,7 +32,7 @@ stages:
   dependsOn: 
   - One
   - Two
-  condition: in(dependencies.Two.result, 'Succeeded', 'Skipped')
+  condition: eq(failed(), 'false')
   displayName: Three
   jobs:
     - job: three
