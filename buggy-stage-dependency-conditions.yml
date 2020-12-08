@@ -1,5 +1,8 @@
 trigger: none
-pr: none
+pr:
+  branches:
+    include:
+    - main
 
 variables:
 - name: hostedVmImage
@@ -32,11 +35,7 @@ stages:
   dependsOn: 
   - One
   - Two
-  condition: >- 
-    and(
-      in(dependencies.One.result, 'Succeeded', 'Skipped'),
-      in(dependencies.Two.result, 'Succeeded', 'Skipped')
-    )
+  condition: eq(variables['Build.Reason'], 'Manual')
   displayName: Three
   jobs:
     - job: three
