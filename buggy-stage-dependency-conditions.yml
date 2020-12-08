@@ -28,6 +28,7 @@ stages:
       steps:
         - script: |
             echo "Two complete"
+            exit 1
 - stage: Three
   dependsOn: 
   - One
