@@ -1,0 +1,48 @@
+trigger: none
+pr: none
+
+variables:
+- name: hostedVmImage
+  value: 'ubuntu-20.04'
+
+stages:
+- stage: One
+  dependsOn: []
+  displayName: One
+  jobs:
+    - job: one
+      displayName: One
+      pool:
+        vmImage: $(hostedVmImage)
+      steps:
+        - script: |
+            echo "One complete"
+- stage: Two
+  dependsOn: []
+  displayName: Two
+  jobs:
+    - job: two
+      displayName: Two
+      pool:
+        vmImage: $(hostedVmImage)
+      steps:
+        - script: |
+            echo "Two complete"
+- stage: Three
+  dependsOn: 
+  - One
+  - Two
+  condition: >- 
+    and(
+      in(dependencies.One.result, 'Succeeded', 'Skipped'),
+      in(dependencies.Two.result, 'Succeeded', 'Skipped')
+    )
+  displayName: Three
+  jobs:
+    - job: three
+      displayName: Three
+      pool:
+        vmImage: $(hostedVmImage)
+      steps:
+        - script: |
+            echo "Three complete"
